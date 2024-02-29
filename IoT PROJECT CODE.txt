@@ -1,0 +1,45 @@
+#include <Adafruit_LiquidCrystal.h>int
+ir1=2;
+int ir2=3; 
+int count=0;
+Adafruit_LiquidCrystal lcd(0);
+
+void setup()
+{
+	pinMode(ir1,INPUT);
+	pinMode(ir2,INPUT);
+	lcd.begin(16, 2);
+	Serial.begin(9600);
+	lcd.setCursor(0,0);
+	lcd.print("Count:");
+}
+void loop()
+{
+	if(digitalRead(ir1)==1) {
+		while(digitalRead(ir1)==1)
+		delay(10);
+		count++;
+		clearDisplay();
+		lcd.setCursor(8,0);
+		lcd.print(count);
+		delay(4000);
+		}
+
+	if(digitalRead(ir2)==1) {
+		while(digitalRead(ir2)==1)delay(10);
+		count--;
+		clearDisplay();
+		lcd.setCursor(8,0);
+		lcd.print(count);
+		delay(4000);
+		}
+	Serial.print("count :");
+	Serial.println(count);
+}
+void clearDisplay() {
+	for(init i=8;i<16;i++)
+	{
+		lcd.setCursor(i,0); 
+		lcd.print(" ");
+	}
+}
